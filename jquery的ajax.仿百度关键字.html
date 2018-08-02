@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .box{
+            width: 600px;
+            margin: 20px auto;
+        }
+        input{
+            width: 490px;
+            height: 40px;
+            float: left;
+            text-indent: 20px;
+
+        }
+        button{
+            width: 100px;
+            height: 44px;
+            float: left;
+            border: none;
+            background-color: #1575b3;
+        }
+        ul{
+            list-style: none;
+            width: 490px;
+            border: 1px solid #ccc ;
+        }
+        li{
+            height: 30px;
+            line-height: 30px;
+            text-indent: 20px;
+        }
+        .clear-fix{
+            clear: both;
+        }
+    </style>
+
+</head>
+<body>
+<div class="box">
+    <input type="text" placeholder="请输入你要搜索的内容">
+    <button>百度一下</button>
+    <div class="clear-fix"></div>
+    <ul>
+
+    </ul>
+</div>
+
+</body>
+<script src="jquery-3.1.0.js"></script>
+<script>
+    $('input').on('keyup',function () {
+        $.ajax({
+            url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+            dataType:'jsonp',
+            jsonp:'cb',
+            data:{
+                wd:$('input').val()
+            },
+            success:function (data) {
+                //声明str在for循环的外面，并且的str一定是str+=，不能是str=，
+              var str='';
+              for(var i=0;i<data.s.length;i++){
+                  str+='<li>'+data.s[i]+'</li>'
+              }
+              $('ul').html(str)
+            }
+        })
+    })
+</script>
+</html>

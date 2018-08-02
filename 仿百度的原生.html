@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .box{
+            width: 600px;
+            margin: 20px auto;
+        }
+        input{
+            width: 490px;
+            height: 40px;
+            float: left;
+            text-indent: 20px;
+
+        }
+        button{
+            width: 100px;
+            height: 44px;
+            float: left;
+            border: none;
+            background-color: #1575b3;
+        }
+        ul{
+            list-style: none;
+            width: 490px;
+            border: 1px solid #ccc ;
+        }
+        li{
+            height: 30px;
+            line-height: 30px;
+            text-indent: 20px;
+        }
+        .clear-fix{
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text" placeholder="请输入你要搜索的内容">
+    <button>百度一下</button>
+    <div class="clear-fix"></div>
+    <ul>
+
+    </ul>
+</div>
+</body>
+<script>
+    var input=document.querySelector('input');
+    var body=document.querySelector('body');
+    // var button=document.querySelector('button');
+    var ul=document.querySelector('ul');
+    input.addEventListener('keyup',function () {
+        // 这是jsonp的跨域请求
+       var script=document.createElement('script');
+        script.src='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?cb=fn&wd='+input.value
+        body.appendChild(script);
+        // 在100毫秒以后就把script标签删除
+        setTimeout(function () {
+            body.removeChild(script)
+        },100)
+    })
+    function  fn(data) {
+        console.log(data.s)
+        var str=''
+        for(var i=0;i<data.s.length;i++){
+            str+='<li>'+data.s[i]+'</li>'
+        }
+        ul.innerHTML=str
+    }
+</script>
+</html>
